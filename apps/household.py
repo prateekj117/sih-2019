@@ -4,11 +4,14 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State
 import plotly.graph_objs as go
 from collections import OrderedDict
+from utils import get_excel
 
 from app import app
 import pandas as pd
 
-data = pd.read_excel('data/2018/households/S5.2.xlsx')
+filename = get_excel('household', 'data/2018/households/S5.2.xlsx')
+
+data = pd.read_excel(filename)
 years = data.iloc[3:4, 2:-2]
 year_set = [year for year in list(OrderedDict.fromkeys(years.values[0]).keys()) if type(year) == str]
 
