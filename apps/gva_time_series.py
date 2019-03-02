@@ -16,10 +16,10 @@ sections = process.iloc[:,0]
 main_sections = [index for index in sections.index if sections[index].isdigit()]
 rows = [data.iloc[idx] for idx in main_sections]
 labels = [row.iloc[-1] for row in rows]
-labelIds = [row.iloc[-2] for row in rows]
+labelIds = main_sections
 
 layout = html.Div([
-    html.H1('Stock Tickers'),
+    html.H1('GVA Time Series'),
     dcc.Dropdown(
         id='my-dropdown',
         options=[{'label': category, 'value': labelIds[idx]} for (idx, category) in enumerate(labels)],
@@ -35,9 +35,8 @@ layout = html.Div([
 @app.callback(Output('my-graph', 'figure'),
               [Input('my-dropdown', 'value')])
 def update_graph(selected_dropdown_value):
-    print(selected_dropdown_value)
     index = int(selected_dropdown_value)
-    row = process.iloc[index, 2:-2].values
+    row = data.iloc[index][2:-2]
     year_list = ['Y ' + year for year in years.values[0]]
     mid = int(len(row)/2) 
     return {
