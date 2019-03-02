@@ -16,10 +16,28 @@ process = data[7:]
 sections = process.iloc[:,0]
 main_sections = [index for index in sections.index if sections[index].isdigit()]
 rows = [data.iloc[idx] for idx in main_sections]
+labels = [row.iloc[-1] for row in rows[0:-1]]
+labelIds = [row.iloc[-2] for row in rows[0:-1]]
 
 def app_layout():
     children = [dcc.Tab(label=year, value=year) for year in year_set]
+    categories = labels.copy()
+    categories.insert(0, 'Main Sections')
+
+    label_ids = labelIds.copy()
+    label_ids.insert(0, '0')
+
     return(
+            html.Div([
+            dcc.Dropdown(
+                id='category',
+                options=[{'label': category, 'value': label_ids[idx]} for (idx, category) in enumerate(categories)],
+                placeholder="Select a category",
+                value='0'
+            )
+            ],
+            style={'width': '30%', 'display': 'block', 'align': 'right', 'margin-left': 'auto', 'margin-right': '0', 'margin-bottom': '20px'}
+            ),
             html.Div([
                     dcc.Tabs(id="tabs", value=year_set[-1], children=children),
                     html.Div(id='output-tab')
@@ -28,13 +46,12 @@ def app_layout():
 
 layout=app_layout()
 
-@app.callback(Output('output-tab', 'children'),
-              [Input('tabs', 'value')])
-def display_content(value):
-    cu_index, co_index = [index for index in years.transpose().index if years[index].iloc[0] == value]
-    cu_values = [row[cu_index] for row in rows[0:-1]]
-    co_values = [row[co_index] for row in rows[0:-1]]
-    labels = [row.iloc[-1] for row in rows[0:-1]]
+def filter(year, category, rows, labels, remove=False):
+    cu_index, co_index = [index for index in years.transpose().index if years[index].iloc[0] == year]
+    
+    filtered = rows[0:-1] if remove else rows
+    cu_values = [row[cu_index] for row in filtered]
+    co_values = [row[co_index] for row in filtered]
     data_cu = [
         {
             'values':cu_values,
@@ -82,3 +99,17 @@ def display_content(value):
             }
         )
     ])
+
+@app.callback(Output('output-tab', 'children'),
+              [Input('tabs', 'value'), Input('category', 'value')])
+def display_content(year, category):
+    if not category and category != '0':
+        current_index = float(category)
+        filtered = [data.iloc[index] for index in sections.index if float(sections[index]) > current_index and float(sections[index]) < current_index + 1]
+        if len(filtered) == 0:
+            filtered = [data.iloc[index] for index in sections.index if float(sections[index]) == current_index]
+
+        sublabels = [row.iloc[-1] for row in filtered]
+
+        return filter(year, category, filtered, sublabels)
+    return filter(year, category, rows, labels, remove=True)

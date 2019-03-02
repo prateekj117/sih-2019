@@ -12,7 +12,6 @@ server = flask.Flask('app')
 server.secret_key = os.environ.get('secret_key', 'secret')
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-df = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/hello-world-stock.csv')
 
 app = dash.Dash('app', server=server, external_stylesheets=external_stylesheets)
 
