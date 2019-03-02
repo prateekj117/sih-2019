@@ -3,6 +3,7 @@ from dash.dependencies import Input, Output
 import dash_core_components as dcc
 import dash_html_components as html
 from collections import OrderedDict
+import dash_table
 
 import pandas as pd
 import time
@@ -34,9 +35,25 @@ def app_layout():
                 placeholder="Select a category",
                 value=labelIds[-1]
             ),
-            dcc.Graph(id='agc-graph')
-        ])
+            dcc.Graph(id='agc-graph'),
+            generate_table(data)
+        ], className="container")
     )
+
+
+def generate_table(dataframe, max_rows=10):
+    data = pd.read_excel('data/2018/aggregates-economic-activity/S7.1.xlsx', header = None)
+    df = data[3:]
+    df.columns = df.iloc[0].fillna(value=pd.Series(range(100)))
+    return(dash_table.DataTable(
+    data=df.to_dict('rows'),
+    columns=[{'id': c, 'name': c} for c in df.columns],
+    style_table={
+        'height': '400px',
+        'overflowY': 'scroll',
+        'border': 'thin lightgrey solid'
+    }))
+
 
 
 layout = app_layout()
