@@ -7,7 +7,7 @@ from app import app
 
 layout = html.Div([
     html.Div([
-        dcc.Link('Go to App stock', href='/stock')
+        dcc.Link('Go to GVA Sector', href='/gva-sectors')
     ])
     
 ])
