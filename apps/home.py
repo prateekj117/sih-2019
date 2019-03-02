@@ -14,6 +14,10 @@ layout = html.Div([
     ]),
     html.Div([
         dcc.Link('Go to Agg. National Accounts', href='/agg_national_accounts')
+    ]),
+    html.Div([
+        dcc.Link('Go to Agg. Economic Activities', href='/agg-eco-activities')
     ])
+    
     
 ])
