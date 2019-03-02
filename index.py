@@ -1,22 +1,53 @@
+import os
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 
-from flask import render_template
+from flask import Flask, request, redirect, url_for, render_template
+from werkzeug.utils import secure_filename
 from app import app, server
 from apps import home, gva_sectors, agg_national_accounts, gva_time_series, agg_eco_activities, household
 from apps.admin import requires_auth
 
+UPLOAD_FOLDER = 'data/uploads'
+ALLOWED_EXTENSIONS = set(['xlsx'])
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+
+server.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     html.Div(id='page-content')
 ])
 
-@server.route('/admin')
+@server.route('/admin', methods=['GET', 'POST'])
 @requires_auth
 def admin():
-    return "Hello !"
+    if request.method == 'POST':
+        option = request.form.get('options')
+        UPLOAD_FOLDER = 'data/uploads/{}'.format(option)
+        server.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+        #print(option)
+    # check if the post request has the file part
+        if 'file' not in request.files:
+            return 'No file part'
+            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit a empty part without filename
+        if file.filename == '':
+            return 'No file selected'
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(server.config['UPLOAD_FOLDER'], filename))
+            # return redirect(url_for('uploaded_file',
+            #                         filename=filename))
+    return render_template('upload.html')
 
 @app.callback(Output('page-content', 'children'),
               [Input('url', 'pathname')])
