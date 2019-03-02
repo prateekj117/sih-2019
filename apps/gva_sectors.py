@@ -103,12 +103,13 @@ def filter(year, category, rows, labels, remove=False):
 @app.callback(Output('output-tab', 'children'),
               [Input('tabs', 'value'), Input('category', 'value')])
 def display_content(year, category):
-    if not category and category != '0':
+    print(year, category, type(category))
+    if category and category != '0':
         current_index = float(category)
         filtered = [data.iloc[index] for index in sections.index if float(sections[index]) > current_index and float(sections[index]) < current_index + 1]
         if len(filtered) == 0:
             filtered = [data.iloc[index] for index in sections.index if float(sections[index]) == current_index]
-
+        print(filtered)
         sublabels = [row.iloc[-1] for row in filtered]
 
         return filter(year, category, filtered, sublabels)
