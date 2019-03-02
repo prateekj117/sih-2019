@@ -3,7 +3,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 
 from app import app
-from apps import home, gva_sectors, agg_national_accounts, gva_time_series, agg_eco_activities
+from apps import home, gva_sectors, agg_national_accounts, gva_time_series, agg_eco_activities, household
 
 
 app.layout = html.Div([
@@ -25,6 +25,8 @@ def display_page(pathname):
         return gva_time_series.layout
     elif pathname == '/agg-eco-activities':
         return agg_eco_activities.layout
+    elif pathname == '/household':
+        return household.layout
     else:
         return '404'
 

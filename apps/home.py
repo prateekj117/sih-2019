@@ -17,7 +17,8 @@ layout = html.Div([
     ]),
     html.Div([
         dcc.Link('Go to Agg. Economic Activities', href='/agg-eco-activities')
+    ]),
+    html.Div([
+        dcc.Link('Go to Households Private consumption', href='/household')
     ])
-    
-    
 ])
