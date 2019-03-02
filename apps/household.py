@@ -4,6 +4,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State
 import plotly.graph_objs as go
 from collections import OrderedDict
+import dash_table
 
 from app import app
 import pandas as pd
@@ -18,6 +19,21 @@ header_set = list(OrderedDict.fromkeys(headers.values).keys())
 labels = process.iloc[:, -1]
 labelIds = labels.index
 
+
+def generate_table(dataframe, max_rows=10):
+    data = pd.read_excel('data/2018/households/S5.2.xlsx', header = None)
+    df = data[3:]
+    df.columns = df.iloc[0].fillna(value=pd.Series(range(100)))
+    return(dash_table.DataTable(
+    data=df.to_dict('rows'),
+    columns=[{'id': c, 'name': c} for c in df.columns],
+    style_table={
+        'height': '400px',
+        'overflowY': 'scroll',
+        'border': 'thin lightgrey solid'
+    }))
+
+
 layout = html.Div([
     html.H1('Private final consumption expenditure classified by item'),
     dcc.Dropdown(
@@ -27,9 +43,9 @@ layout = html.Div([
         style={'margin-bottom': '20px'}
     ),
     dcc.Graph(id='household-bar-graph',
-              style={'padding-top': '20px'})
-], className="container")
-
+            style={'padding-top': '20px'}),
+            generate_table(data)
+    ], className="container")
 
 @app.callback(Output('household-bar-graph', 'figure'),
               [Input('house-dropdown', 'value')])
