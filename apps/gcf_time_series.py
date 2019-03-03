@@ -21,7 +21,7 @@ print(labelIds[1])
 
 
 layout = html.Div([
-    html.H1('GCF Time Series'),
+    html.H2('Gross Capital Formation Timeseries'),
     dcc.Dropdown(
         id='gcf-my-dropdown',
         options=[{'label': category, 'value': labelIds[idx]} for (idx, category) in enumerate(labels)],
