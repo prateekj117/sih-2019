@@ -32,6 +32,7 @@ def app_layout():
     label_ids.insert(0, '0')
 
     return (
+        html.H2('Gross Value Added Sectors'),
         html.Div([
             dcc.Dropdown(
                 id='category',
