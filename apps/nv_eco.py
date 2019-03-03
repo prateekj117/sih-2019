@@ -3,25 +3,21 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
 from collections import OrderedDict
-import dash_table
-from utils import get_excel
+
 
 import pandas as pd
 
 from app import app
 
-filename = get_excel('gva_sectors', 'data/2018/economic-aggregates/S1.6.xlsx')
-
-data = pd.read_excel(filename)
-years = data.iloc[5:6, 2:-2]
+data = pd.read_excel('data/2018/economic-aggregates/S1.7r.xlsx')
+years = data.iloc[5:6,2:-2]
 year_set = list(OrderedDict.fromkeys(years.values[0]).keys())
 process = data[7:]
-sections = process.iloc[:, 0]
+sections = process.iloc[:,0]
 main_sections = [index for index in sections.index if sections[index].isdigit()]
 rows = [data.iloc[idx] for idx in main_sections]
 labels = [row.iloc[-1] for row in rows[0:-1]]
 labelIds = [row.iloc[-2] for row in rows[0:-1]]
-
 
 def app_layout():
     children = [dcc.Tab(label=year, value=year) for year in year_set]
@@ -31,59 +27,41 @@ def app_layout():
     label_ids = labelIds.copy()
     label_ids.insert(0, '0')
 
-    return (
-        html.Div([
+    return(
+            html.Div([
             dcc.Dropdown(
-                id='category',
+                id='nv-category',
                 options=[{'label': category, 'value': label_ids[idx]} for (idx, category) in enumerate(categories)],
                 placeholder="Select a category",
                 value='0'
             )
-        ],
-            style={'width': '30%', 'display': 'block', 'align': 'right', 'margin-left': 'auto', 'margin-right': '0',
-                   'margin-bottom': '20px'}
-        ),
-        html.Div([
-            dcc.Tabs(id="tabs", value=year_set[-1], children=children),
-            html.Div(id='output-tab'),
-            generate_table(data)
-        ], className="container")
+            ],
+            style={'width': '30%', 'display': 'block', 'align': 'right', 'margin-left': 'auto', 'margin-right': '0', 'margin-bottom': '20px'}
+            ),
+            html.Div([
+                    dcc.Tabs(id="nv-tabs", value=year_set[-1], children=children),
+                    html.Div(id='nv-output-tab')
+                    ])
     )
 
-
-def generate_table(dataframe, max_rows=10):
-    data = pd.read_excel(filename, header = None)
-    df = data[6:]
-    df.columns = df.iloc[0].fillna(value=pd.Series(range(100)))
-    return(dash_table.DataTable(
-    data=df.to_dict('rows'),
-    columns=[{'id': c, 'name': c} for c in df.columns],
-    style_table={
-        'height': '400px',
-        'overflowY': 'scroll',
-        'border': 'thin lightgrey solid'
-    }))
-
-
-layout = app_layout()
-
+layout=app_layout()
 
 def filter(year, category, rows, labels, remove=False):
     cu_index, co_index = [index for index in years.transpose().index if years[index].iloc[0] == year]
-
+    
     filtered = rows[0:-1] if remove else rows
     cu_values = [row[cu_index] for row in filtered]
     co_values = [row[co_index] for row in filtered]
     data_cu = [
         {
-            'values': cu_values,
+            'values':cu_values,
             'type': 'pie',
             'labels': labels
         },
     ]
     data_co = [
         {
-            'values': co_values,
+            'values':co_values,
             'type': 'pie',
             'labels': labels
         },
@@ -91,7 +69,7 @@ def filter(year, category, rows, labels, remove=False):
 
     return html.Div([
         dcc.Graph(
-            id='cp-graph',
+            id='nv-cp-graph',
             figure={
                 'data': data_cu,
                 'layout': {
@@ -106,7 +84,7 @@ def filter(year, category, rows, labels, remove=False):
             }
         ),
         dcc.Graph(
-            id='co-graph',
+            id='nv-co-graph',
             figure={
                 'data': data_co,
                 'layout': {
@@ -122,16 +100,15 @@ def filter(year, category, rows, labels, remove=False):
         )
     ])
 
-
-@app.callback(Output('output-tab', 'children'),
-              [Input('tabs', 'value'), Input('category', 'value')])
+@app.callback(Output('nv-output-tab', 'children'),
+              [Input('nv-tabs', 'value'), Input('nv-category', 'value')])
 def display_content(year, category):
     if category and category != '0':
         current_index = float(category)
-        filtered = [data.iloc[index] for index in sections.index if
-                    float(sections[index]) > current_index and float(sections[index]) < current_index + 1]
+        filtered = [data.iloc[index] for index in sections.index if float(sections[index]) > current_index and float(sections[index]) < current_index + 1]
         if len(filtered) == 0:
             filtered = [data.iloc[index] for index in sections.index if float(sections[index]) == current_index]
+
         sublabels = [row.iloc[-1] for row in filtered]
 
         return filter(year, category, filtered, sublabels)
