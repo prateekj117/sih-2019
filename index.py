@@ -6,7 +6,8 @@ from dash.dependencies import Input, Output
 from flask import Flask, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 from app import app, server
-from apps import home, gva_sectors, agg_national_accounts, gva_time_series, agg_eco_activities, cfc_sectors, nv_eco, cfc_time_series, nv_time_series, household
+from apps import home, crop_wise_output, gva_sectors, agg_national_accounts, gva_time_series, agg_eco_activities, \
+    cfc_sectors, nv_eco, cfc_time_series, nv_time_series, household
 from apps.admin import requires_auth
 
 UPLOAD_FOLDER = 'data/uploads'
@@ -15,14 +16,17 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 server.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     html.Div(id='page-content')
 ])
+
 
 @server.route('/admin', methods=['GET', 'POST'])
 @requires_auth
@@ -31,8 +35,8 @@ def admin():
         option = request.form.get('options')
         UPLOAD_FOLDER = 'data/uploads/{}'.format(option)
         server.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-        #print(option)
-    # check if the post request has the file part
+        # print(option)
+        # check if the post request has the file part
         if 'file' not in request.files:
             return 'No file part'
             return redirect(request.url)
@@ -48,6 +52,7 @@ def admin():
             # return redirect(url_for('uploaded_file',
             #                         filename=filename))
     return render_template('upload.html')
+
 
 @app.callback(Output('page-content', 'children'),
               [Input('url', 'pathname')])
@@ -72,8 +77,9 @@ def display_page(pathname):
         return nv_time_series.layout
     elif pathname == '/household':
         return household.layout
+    elif pathname == '/crop_wise_output':
+        return crop_wise_output.layout
     elif pathname == '/admin':
-        from apps import admin
         return admin.layout
     else:
         return '404'
