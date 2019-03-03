@@ -4,6 +4,7 @@ import dash_html_components as html
 import math
 from dash.dependencies import Input, Output, State
 from collections import OrderedDict
+import dash_table
 
 import pandas as pd
 
@@ -18,6 +19,20 @@ main_sections = [index for index in sections.index if str(sections[index]).isdig
 rows = [data.iloc[idx] for idx in main_sections]
 labels = [row.iloc[1] for row in rows[0:-2]]
 labelIds = [row.iloc[0] for row in rows[0:-2]]
+
+
+def generate_table(dataframe, max_rows=10):
+    data = pd.read_excel('data/2018/economic-aggregates/S1.10.xlsx', header = None)
+    df = data[6:]
+    df.columns = df.iloc[0].fillna(value=pd.Series(range(100)))
+    return(dash_table.DataTable(
+    data=df.to_dict('rows'),
+    columns=[{'id': c, 'name': c} for c in df.columns],
+    style_table={
+        'height': '400px',
+        'overflowY': 'scroll',
+        'border': 'thin lightgrey solid'
+    }))
 
 
 def app_layout():
@@ -43,8 +58,10 @@ def app_layout():
         ),
         html.Div([
             dcc.Tabs(id="gcf-tabs", value=year_set[-1], children=children),
-            html.Div(id='gcf-output-tab')
-        ])
+            html.Div(id='gcf-output-tab'),
+            generate_table(data)
+        ],className="container")
+
     )
 
 
