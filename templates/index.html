@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>National Accounts Dashboard</title>
+    <meta name="viewport" content="width=device-width,initial-scale-1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+</head>
+<body>
+    <section class="hero is-bold is-info is-medium">
+        <div class="hero-body has-text-centered">
+            <h1 class="title">Dashboard | National Account</h1>
+        </div>
+    </section>
+
+    <nav class="navbar is-info">
+        <div class="container">
+            <div class="navbar-brand">
+                <span class="navbar-burger burger" data-target="navMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </div>
+            <div id="navMenu" class="navbar-menu">
+                <div class="navbar-end">
+                    <a href="/admin" class="navbar-item">Login</a>
+                    <a href="http://mospi.nic.in" class="navbar-item">Official Site</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+{% block admin_login %}{% endblock %}
+
+
+    <section class="hero is-info">
+        <div class="hero-body has-text-centered">
+            <footer>
+                <h1 class="title is-2"></h1>
+                Ministry of Statistics and PI
+                <hr style="width: 60% !important; margin-left: 20%;">
+                Government of India
+            </footer>
+        </div>
+    </section>
+
+</body>
+</html>
+<script type="text/javascript">
+    (function() {
+      var burger = document.querySelector('.burger');
+      var nav = document.querySelector('#' + burger.dataset.target);
+      burger.addEventListener('click', function(){
+        burger.classList.toggle('is-active');
+        nav.classList.toggle('is-active');
+      });
+    })();
+</script>

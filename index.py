@@ -52,8 +52,8 @@ def admin():
 @app.callback(Output('page-content', 'children'),
               [Input('url', 'pathname')])
 def display_page(pathname):
-    if pathname == '/' or pathname == '/home':
-        return home.layout
+    if pathname == '/':
+        return None
     elif pathname == '/agg_national_accounts':
         return agg_national_accounts.layout
     elif pathname == '/gva-sectors':
