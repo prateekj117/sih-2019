@@ -3,7 +3,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
 from collections import OrderedDict
-
+import dash_table
 
 import pandas as pd
 
@@ -18,6 +18,21 @@ main_sections = [index for index in sections.index if sections[index].isdigit()]
 rows = [data.iloc[idx] for idx in main_sections]
 labels = [row.iloc[-1] for row in rows[0:-1]]
 labelIds = [row.iloc[-2] for row in rows[0:-1]]
+
+
+def generate_table(dataframe, max_rows=10):
+    data = pd.read_excel('data/2018/economic-aggregates/S1.7r.xlsx', header = None)
+    df = data[6:]
+    df.columns = df.iloc[0].fillna(value=pd.Series(range(100)))
+    return(dash_table.DataTable(
+    data=df.to_dict('rows'),
+    columns=[{'id': c, 'name': c} for c in df.columns],
+    style_table={
+        'height': '400px',
+        'overflowY': 'scroll',
+        'border': 'thin lightgrey solid'
+    }))
+
 
 def app_layout():
     children = [dcc.Tab(label=year, value=year) for year in year_set]
@@ -40,8 +55,9 @@ def app_layout():
             ),
             html.Div([
                     dcc.Tabs(id="nv-tabs", value=year_set[-1], children=children),
-                    html.Div(id='nv-output-tab')
-                    ])
+                    html.Div(id='nv-output-tab'),
+                    generate_table(data)
+                    ], className="container")
     )
 
 layout=app_layout()
