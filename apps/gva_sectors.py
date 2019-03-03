@@ -91,6 +91,7 @@ def filter(year, category, rows, labels, remove=False):
     ]
 
     return html.Div([
+        html.H2('Current Price'),
         dcc.Graph(
             id='cp-graph',
             figure={
@@ -106,6 +107,7 @@ def filter(year, category, rows, labels, remove=False):
                 }
             }
         ),
+        html.H2('Constant Price'),
         dcc.Graph(
             id='co-graph',
             figure={
