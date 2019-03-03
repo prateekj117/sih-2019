@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Upload new File</title>
+    <meta name="viewport" content="width=device-width,initial-scale-1.0,user-scalable=no"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+</head>
+<body>
+
+    <nav class="navbar is-info">
+        <div class="container">
+            <div class="navbar-brand">
+                <span class="navbar-burger burger" data-target="navMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </div>
+            <div id="navMenu" class="navbar-menu">
+                <div class="navbar-end">
+                    <a href="/admin" class="navbar-item">Login</a>
+                    <a href="http://mospi.nic.in" class="navbar-item">Official Site</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+{% block admin_login %}{% endblock %}
+
+
+    <section class="hero is-info">
+        <div class="hero-body has-text-centered">
+            <footer>
+                <h1 class="title is-2"></h1>
+                Ministry of Statistics and PI
+                <hr style="width: 60% !important; margin-left: 20%;">
+                Government of India
+            </footer>
+        </div>
+    </section>
+    <br>
+    <div class="card">
+        <div class="container">
+            <h1>Upload new File</h1>
+            <form method=post enctype=multipart/form-data>
+                <div class="field">
+                        <div class="file is-primary">
+                          <label class="file-label">
+                            <input class="file-input" type="file" name="file">
+                            <span class="file-cta">
+                              <span class="file-icon">
+                                <i class="fas fa-upload"></i>
+                              </span>
+                              <span class="file-label">
+                                Choose file
+                              </span>
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+                <input type=submit value=Upload class="button" style="display: inline-block;">
+
+                <br>
+                <div class="select">
+                    <select name="options">
+                        <option value="" disabled="disabled" selected="selected">Please select a name</option>
+                        <option value="aggregate_economic_activities">Aggregate economic activities</option>
+                        <option value="aggregate_national_accounts">Aggregate national accounts</option>
+                        <option value="gva_sectors">GVA sectors</option>
+                        <option value="gva_time_series">GVA time series</option>
+                        <option value="household">Household</option>
+                    </select>
+                </div>
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class=flashes>
+                    {% for message in messages %}
+                    <article class="message is-success">
+                    <div class="message-header">
+                            <p>{{ message }}</p>
+                            <button class="delete" aria-label="delete"></button>
+                        </div>
+                    </article>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+                {% endwith %}
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    (function() {
+      var burger = document.querySelector('.burger');
+      var nav = document.querySelector('#' + burger.dataset.target);
+      burger.addEventListener('click', function(){
+        burger.classList.toggle('is-active');
+        nav.classList.toggle('is-active');
+      });
+    })();
+</script>
