@@ -6,7 +6,7 @@ from dash.dependencies import Input, Output
 from flask import Flask, request, redirect, url_for, render_template
 from werkzeug.utils import secure_filename
 from app import app, server
-from apps import home, gva_sectors, agg_national_accounts, gva_time_series, agg_eco_activities, household
+from apps import home, gva_sectors, agg_national_accounts, gva_time_series, agg_eco_activities, household, crop_wise_output
 from apps.admin import requires_auth
 
 UPLOAD_FOLDER = 'data/uploads'
@@ -64,8 +64,9 @@ def display_page(pathname):
         return agg_eco_activities.layout
     elif pathname == '/household':
         return household.layout
+    elif pathname == '/crop_wise_output':
+        return crop_wise_output.layout
     elif pathname == '/admin':
-        from apps import admin
         return admin.layout
     else:
         return '404'

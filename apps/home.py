@@ -20,5 +20,8 @@ layout = html.Div([
     ]),
     html.Div([
         dcc.Link('Go to Households Private consumption', href='/household')
+    ]),
+     html.Div([
+        dcc.Link('Go to Disaggregated Statements', href='/crop_wise_output')
     ])
 ])
