@@ -34,6 +34,9 @@ year_set = list(OrderedDict.fromkeys(years.values[0]).keys())
 def app_layout():
     return (
         html.Div([
+            html.H2('Aggregated National Accounts')
+        ]),
+        html.Div([
             dcc.Dropdown(
                 id='tabs',
                 options=[{'label': label, 'value': idx} for (idx, label) in enumerate(labels)],

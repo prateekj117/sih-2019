@@ -32,6 +32,9 @@ def app_layout():
     children = [dcc.Tab(label=label, value=labelIds[idx]) for (idx, label) in enumerate(labels)]
     return (
         html.Div([
+            html.H2('Aggregated Economic Activities')
+        ]),
+        html.Div([
             dcc.Dropdown(
                 id='tabs',
                 options=[{'label': label, 'value': labelIds[idx]} for (idx, label) in enumerate(labels)],
