@@ -9,13 +9,15 @@
 <body>
     <section class="hero is-bold is-info is-medium">
         <div class="hero-body has-text-centered">
-            <h1 class="title">Dashboard | National Account</h1>
+            <h1 class="title">DASHBOARD | National Accounts</h1>
         </div>
     </section>
 
     <nav class="navbar is-info">
         <div class="container">
             <div class="navbar-brand">
+                <a class="navbar-item" href="<a class="navbar-item" href="http:/mospi.nic.in">
+                </a>
                 <span class="navbar-burger burger" data-target="navMenu">
                     <span></span>
                     <span></span>
@@ -32,8 +34,182 @@
     </nav>
 
 
-{% block admin_login %}{% endblock %}
 
+    <!--add card for links-->
+    <section class="section">
+        <div class="container">
+            <div class="card container">
+                <a href="/agg_national_accounts">
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-left">
+                        <figure class="image is-128x128">
+                            <img src="https://wcs.smartdraw.com/line-graph/img/line-graph-2.jpg?bn=1510011143" alt="Placeholder image">
+                        </figure>
+                        </div>
+                        <div class="media-content">
+                        <p class="title is-4">Aggregate National Accounts</p>
+                        </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+
+            <div class="card container">
+                <a href="/gva-sectors">
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-left">
+                            <figure class="image is-128x128">
+                                <img src="https://lh3.googleusercontent.com/g0Jw-I6-gH2DVCpnl3u8QKZVT_meR9lcJlpyeSZ-MyvwLnyEZvgyrY5frldA8HCv55s=w280-rwa" alt="Placeholder image">
+                            </figure>
+                            </div>
+                            <div class="media-content">
+                                <p class="title is-4">GVA Sectors</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="card container">
+                <a href="/gva-time-series">
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-left">
+                                <figure class="image is-128x128">
+                                    <img src="data:image/png;base64,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" alt="Placeholder image">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <p class="title is-4">GVA Time Series</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="card container">
+                <a href="/agg-eco-activities">
+                    <div class="card-content">
+                    <div class="media">
+                    <div class="media-left">
+                        <figure class="image is-128x128">
+                        <img src="https://wcs.smartdraw.com/line-graph/img/line-graph-2.jpg?bn=1510011143" alt="Placeholder image">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <p class="title is-4">Aggregate Economic Activities</p>
+                    </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+
+            <div class="card container">
+                <a href="/household">
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-left">
+                                <figure class="image is-128x128">
+                                    <img src="data:image/png;base64,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" alt="Placeholder image">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <p class="title is-4">Household</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="card container">
+                <a href="/nv_eco">
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-left">
+                                <figure class="image is-128x128">
+                                    <img src="https://lh3.googleusercontent.com/g0Jw-I6-gH2DVCpnl3u8QKZVT_meR9lcJlpyeSZ-MyvwLnyEZvgyrY5frldA8HCv55s=w280-rwa" alt="Placeholder image">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <p class="title is-4">Economic Aggregates</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="card container">
+                <a href="/cfc_sectors">
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-left">
+                                <figure class="image is-128x128">
+                                    <img src="https://lh3.googleusercontent.com/g0Jw-I6-gH2DVCpnl3u8QKZVT_meR9lcJlpyeSZ-MyvwLnyEZvgyrY5frldA8HCv55s=w280-rwa" alt="Placeholder image">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <p class="title is-4">CFC Sectors</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="card container">
+                <a href="/cfc_time_series">
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-left">
+                                <figure class="image is-128x128">
+                                    <img src="data:image/png;base64,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" alt="Placeholder image">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <p class="title is-4">CFC Time Series</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="card container">
+                <a href="/nv_time_series">
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-left">
+                                <figure class="image is-128x128">
+                                    <img src="data:image/png;base64,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" alt="Placeholder image">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <p class="title is-4">NV Time Series</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="card container">
+                <a href="/crop_wise_output">
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-left">
+                                <figure class="image is-128x128">
+                                    <img src="data:image/png;base64,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" alt="Placeholder image">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <p class="title is-4">Crop Wise Value of Output</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        <!-- card links end -->
+        </div>
+    </section>
 
     <section class="hero is-info">
         <div class="hero-body has-text-centered">
@@ -45,178 +221,7 @@
             </footer>
         </div>
     </section>
-
-    <!--add card for links-->
-    <div class="card container">
-        <a href="/agg_national_accounts">
-          <div class="card-content">
-          <div class="media">
-            <div class="media-left">
-              <figure class="image is-128x128">
-                <img src="https://wcs.smartdraw.com/line-graph/img/line-graph-2.jpg?bn=1510011143" alt="Placeholder image">
-              </figure>
-            </div>
-            <div class="media-content">
-              <p class="title is-4">Aggregate National Accounts</p>
-            </div>
-          </div>
-        </div>
-        </a>
-    </div>
-
-    <div class="card container">
-            <a href="/gva-sectors">
-              <div class="card-content">
-              <div class="media">
-                <div class="media-left">
-                  <figure class="image is-128x128">
-                    <img src="https://lh3.googleusercontent.com/g0Jw-I6-gH2DVCpnl3u8QKZVT_meR9lcJlpyeSZ-MyvwLnyEZvgyrY5frldA8HCv55s=w280-rwa" alt="Placeholder image">
-                  </figure>
-                </div>
-                <div class="media-content">
-                  <p class="title is-4">GVA Sectors</p>
-                </div>
-              </div>
-            </div>
-            </a>
-        </div>
-
-        <div class="card container">
-            <a href="/gva-time-series">
-                <div class="card-content">
-                <div class="media">
-                <div class="media-left">
-                    <figure class="image is-128x128">
-                    <img src="data:image/png;base64,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" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="media-content">
-                    <p class="title is-4">GVA Time Series</p>
-                </div>
-                </div>
-            </div>
-            </a>
-        </div>
-
-        <div class="card container">
-            <a href="/agg-eco-activities">
-                <div class="card-content">
-                <div class="media">
-                <div class="media-left">
-                    <figure class="image is-128x128">
-                    <img src="https://wcs.smartdraw.com/line-graph/img/line-graph-2.jpg?bn=1510011143" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="media-content">
-                    <p class="title is-4">Aggregate Economic Activities</p>
-                </div>
-                </div>
-            </div>
-            </a>
-        </div>
-
-        <div class="card container">
-            <a href="/household">
-                <div class="card-content">
-                <div class="media">
-                <div class="media-left">
-                    <figure class="image is-128x128">
-                    <img src="data:image/png;base64,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" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="media-content">
-                    <p class="title is-4">Household</p>
-                </div>
-                </div>
-            </div>
-            </a>
-        </div>
-
-        <div class="card container">
-            <a href="/nv_eco">
-                <div class="card-content">
-                <div class="media">
-                <div class="media-left">
-                    <figure class="image is-128x128">
-                        <img src="https://lh3.googleusercontent.com/g0Jw-I6-gH2DVCpnl3u8QKZVT_meR9lcJlpyeSZ-MyvwLnyEZvgyrY5frldA8HCv55s=w280-rwa" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="media-content">
-                    <p class="title is-4">Economic Aggregates</p>
-                </div>
-                </div>
-            </div>
-            </a>
-        </div>
-
-        <div class="card container">
-            <a href="/cfc_sectors">
-                <div class="card-content">
-                <div class="media">
-                <div class="media-left">
-                    <figure class="image is-128x128">
-                        <img src="https://lh3.googleusercontent.com/g0Jw-I6-gH2DVCpnl3u8QKZVT_meR9lcJlpyeSZ-MyvwLnyEZvgyrY5frldA8HCv55s=w280-rwa" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="media-content">
-                    <p class="title is-4">CFC Sectors</p>
-                </div>
-                </div>
-            </div>
-            </a>
-        </div>
-
-        <div class="card container">
-            <a href="/cfc_time_series">
-                <div class="card-content">
-                <div class="media">
-                <div class="media-left">
-                    <figure class="image is-128x128">
-                    <img src="data:image/png;base64,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" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="media-content">
-                    <p class="title is-4">CFC Time Series</p>
-                </div>
-                </div>
-            </div>
-            </a>
-        </div>
-
-        <div class="card container">
-            <a href="/nv_time_series">
-                <div class="card-content">
-                <div class="media">
-                <div class="media-left">
-                    <figure class="image is-128x128">
-                    <img src="data:image/png;base64,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" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="media-content">
-                    <p class="title is-4">NV Time Series</p>
-                </div>
-                </div>
-            </div>
-            </a>
-        </div>
-
-        <div class="card container">
-            <a href="/crop_wise_output">
-                <div class="card-content">
-                <div class="media">
-                <div class="media-left">
-                    <figure class="image is-128x128">
-                    <img src="data:image/png;base64,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" alt="Placeholder image">
-                    </figure>
-                </div>
-                <div class="media-content">
-                    <p class="title is-4">Crop Wise Value of Output</p>
-                </div>
-                </div>
-            </div>
-            </a>
-        </div>
-        <!-- card links end -->
+    
 
 </body>
 </html>
