@@ -36,7 +36,6 @@ def update_graph(selected_dropdown_value):
     index = int(selected_dropdown_value)
     row = data.iloc[index][2:-2]
     year_list = ['Y ' + year for year in years.values[0]]
-    print(year_list,row)
     mid = int(len(row) / 2)
     return {
         'data': [go.Bar(
