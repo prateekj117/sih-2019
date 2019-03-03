@@ -4,13 +4,16 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State
 from collections import OrderedDict
 import dash_table
+from utils import get_excel
 
 import pandas as pd
 
 from app import app
 import math
 
-data = pd.read_excel('data/2018/economic-aggregates/S1.1.xlsx')
+filename = get_excel('aggregate_national_accounts', 'data/2018/economic-aggregates/S1.1.xlsx')
+
+data = pd.read_excel(filename)
 main_sections = data.iloc[5:-1, -2]
 main_index = [index for index in main_sections.index if
               (type(main_sections[index]) != str and math.isnan(main_sections[index]))]
@@ -47,7 +50,7 @@ def app_layout():
 
 
 def generate_table(dataframe, max_rows=10):
-    data = pd.read_excel('data/2018/economic-aggregates/S1.1.xlsx', header = None)
+    data = pd.read_excel(filename, header = None)
     df = data[6:-1]
     df.columns = df.iloc[0].fillna(value=pd.Series(range(100)))
     return(dash_table.DataTable(
