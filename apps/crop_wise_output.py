@@ -8,9 +8,9 @@ from app import app
 import pandas as pd
 
 data = pd.read_excel('data/2018/disaggregated-statements/S8.1.2.xlsx')
-years = data.iloc[4:5, 2:-2]
+years = data.iloc[5:6, 2:-2]
 
-process = data[6:]
+process = data[7:]
 sections = process.iloc[:, 0]
 main_sections = [index for index in sections.index if sections[index].isdigit()]
 rows = [data.iloc[idx] for idx in main_sections]
