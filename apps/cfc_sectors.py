@@ -29,6 +29,9 @@ def app_layout():
 
     return (
         html.Div([
+            html.H2('CFC Sectors')
+        ]),
+        html.Div([
             dcc.Dropdown(
                 id='cfc-category',
                 options=[{'label': category, 'value': label_ids[idx]} for (idx, category) in enumerate(categories)],
