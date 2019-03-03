@@ -3,6 +3,8 @@ from dash.dependencies import Input, Output
 import dash_core_components as dcc
 import dash_html_components as html
 from collections import OrderedDict
+import dash_table
+from utils import get_excel
 
 import pandas as pd
 import time
@@ -10,7 +12,9 @@ import math
 
 from app import app
 
-data = pd.read_excel('data/2018/aggregates-economic-activity/S7.1.xlsx')
+filename = get_excel('aggregate_economic_activities', 'data/2018/aggregates-economic-activity/S7.1.xlsx')
+
+data = pd.read_excel(filename)
 
 years = data.iloc[2:3, 2:-2]
 year_set = [year for year in list(OrderedDict.fromkeys(years.values[0]).keys()) if type(year) == str]
@@ -34,9 +38,25 @@ def app_layout():
                 placeholder="Select a category",
                 value=labelIds[-1]
             ),
-            dcc.Graph(id='agc-graph')
-        ])
+            dcc.Graph(id='agc-graph'),
+            generate_table(data)
+        ], className="container")
     )
+
+
+def generate_table(dataframe, max_rows=10):
+    data = pd.read_excel(filename, header = None)
+    df = data[3:]
+    df.columns = df.iloc[0].fillna(value=pd.Series(range(100)))
+    return(dash_table.DataTable(
+    data=df.to_dict('rows'),
+    columns=[{'id': c, 'name': c} for c in df.columns],
+    style_table={
+        'height': '400px',
+        'overflowY': 'scroll',
+        'border': 'thin lightgrey solid'
+    }))
+
 
 
 layout = app_layout()

@@ -29,8 +29,8 @@ layout = html.Div([
     ]),
     html.Div([
     dcc.Link('Go NV Time Series', href='/nv_time_series')
-
+    ]),
+    html.Div([
+        dcc.Link('Go to Households Private consumption', href='/household')
     ])
-    
-    
 ])
