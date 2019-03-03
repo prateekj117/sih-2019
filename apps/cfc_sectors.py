@@ -3,16 +3,12 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
 from collections import OrderedDict
-import dash_table
-from utils import get_excel
 
 import pandas as pd
 
 from app import app
 
-filename = get_excel('gva_sectors', 'data/2018/economic-aggregates/S1.6.xlsx')
-
-data = pd.read_excel(filename)
+data = pd.read_excel('data/2018/economic-aggregates/S1.8.xlsx')
 years = data.iloc[5:6, 2:-2]
 year_set = list(OrderedDict.fromkeys(years.values[0]).keys())
 process = data[7:]
@@ -34,7 +30,7 @@ def app_layout():
     return (
         html.Div([
             dcc.Dropdown(
-                id='category',
+                id='cfc-category',
                 options=[{'label': category, 'value': label_ids[idx]} for (idx, category) in enumerate(categories)],
                 placeholder="Select a category",
                 value='0'
@@ -44,25 +40,10 @@ def app_layout():
                    'margin-bottom': '20px'}
         ),
         html.Div([
-            dcc.Tabs(id="tabs", value=year_set[-1], children=children),
-            html.Div(id='output-tab'),
-            generate_table(data)
-        ], className="container")
+            dcc.Tabs(id="cfc-tabs", value=year_set[-1], children=children),
+            html.Div(id='cfc-output-tab')
+        ])
     )
-
-
-def generate_table(dataframe, max_rows=10):
-    data = pd.read_excel(filename, header = None)
-    df = data[6:]
-    df.columns = df.iloc[0].fillna(value=pd.Series(range(100)))
-    return(dash_table.DataTable(
-    data=df.to_dict('rows'),
-    columns=[{'id': c, 'name': c} for c in df.columns],
-    style_table={
-        'height': '400px',
-        'overflowY': 'scroll',
-        'border': 'thin lightgrey solid'
-    }))
 
 
 layout = app_layout()
@@ -91,7 +72,7 @@ def filter(year, category, rows, labels, remove=False):
 
     return html.Div([
         dcc.Graph(
-            id='cp-graph',
+            id='cfc-cp-graph',
             figure={
                 'data': data_cu,
                 'layout': {
@@ -106,7 +87,7 @@ def filter(year, category, rows, labels, remove=False):
             }
         ),
         dcc.Graph(
-            id='co-graph',
+            id='cfc-co-graph',
             figure={
                 'data': data_co,
                 'layout': {
@@ -123,8 +104,8 @@ def filter(year, category, rows, labels, remove=False):
     ])
 
 
-@app.callback(Output('output-tab', 'children'),
-              [Input('tabs', 'value'), Input('category', 'value')])
+@app.callback(Output('cfc-output-tab', 'children'),
+              [Input('cfc-tabs', 'value'), Input('cfc-category', 'value')])
 def display_content(year, category):
     if category and category != '0':
         current_index = float(category)
