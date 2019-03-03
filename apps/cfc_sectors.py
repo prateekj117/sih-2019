@@ -3,7 +3,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
 from collections import OrderedDict
-
+import dash_table
 import pandas as pd
 
 from app import app
@@ -29,6 +29,9 @@ def app_layout():
 
     return (
         html.Div([
+            html.H2('CFC Sectors')
+        ]),
+        html.Div([
             dcc.Dropdown(
                 id='cfc-category',
                 options=[{'label': category, 'value': label_ids[idx]} for (idx, category) in enumerate(categories)],
@@ -41,9 +44,24 @@ def app_layout():
         ),
         html.Div([
             dcc.Tabs(id="cfc-tabs", value=year_set[-1], children=children),
-            html.Div(id='cfc-output-tab')
-        ])
+            html.Div(id='cfc-output-tab'),
+            generate_table(data)
+        ], className="container")
     )
+
+
+def generate_table(dataframe, max_rows=10):
+    data = pd.read_excel('data/2018/economic-aggregates/S1.8.xlsx', header = None)
+    df = data[6:]
+    df.columns = df.iloc[0].fillna(value=pd.Series(range(100)))
+    return(dash_table.DataTable(
+    data=df.to_dict('rows'),
+    columns=[{'id': c, 'name': c} for c in df.columns],
+    style_table={
+        'height': '400px',
+        'overflowY': 'scroll',
+        'border': 'thin lightgrey solid'
+    }))
 
 
 layout = app_layout()

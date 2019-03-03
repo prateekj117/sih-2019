@@ -32,6 +32,9 @@ def app_layout():
     children = [dcc.Tab(label=label, value=labelIds[idx]) for (idx, label) in enumerate(labels)]
     return (
         html.Div([
+            html.H2('Aggregated Economic Activities')
+        ]),
+        html.Div([
             dcc.Dropdown(
                 id='tabs',
                 options=[{'label': label, 'value': labelIds[idx]} for (idx, label) in enumerate(labels)],
@@ -45,7 +48,7 @@ def app_layout():
 
 
 def generate_table(dataframe, max_rows=10):
-    data = pd.read_excel(filename, header = None)
+    data = pd.read_excel('data/2018/aggregates-economic-activity/S7.1.xlsx', header = None)
     df = data[3:]
     df.columns = df.iloc[0].fillna(value=pd.Series(range(100)))
     return(dash_table.DataTable(

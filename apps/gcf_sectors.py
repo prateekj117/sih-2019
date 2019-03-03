@@ -14,14 +14,20 @@ years = data.iloc[5:6, 2:-2]
 year_set = list(OrderedDict.fromkeys(years.values[0]).keys())
 process = data[7:]
 sections = process.iloc[:, 0]
+<<<<<<< HEAD
 print(sections)
+=======
+>>>>>>> 641adfcd6f43f27097121c3c65c0e0d9d24585f4
 main_sections = [index for index in sections.index if str(sections[index]).isdigit() or (type(sections[index]) != str and math.isnan(sections[index]))]
 rows = [data.iloc[idx] for idx in main_sections]
 labels = [row.iloc[1] for row in rows[0:-2]]
 labelIds = [row.iloc[0] for row in rows[0:-2]]
 
+<<<<<<< HEAD
 print(rows)
 print('labels', labels)
+=======
+>>>>>>> 641adfcd6f43f27097121c3c65c0e0d9d24585f4
 
 def app_layout():
     children = [dcc.Tab(label=year, value=year) for year in year_set]
