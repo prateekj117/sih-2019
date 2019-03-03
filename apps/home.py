@@ -19,16 +19,22 @@ layout = html.Div([
         dcc.Link('Go to Agg. Economic Activities', href='/agg-eco-activities')
     ]),
     html.Div([
-    dcc.Link('Go NVA Sector', href='/nv_eco')
+    dcc.Link('Go to NVA Sector', href='/nv_eco')
     ]),
     html.Div([
-    dcc.Link('Go CFC Sector', href='/cfc_sectors')
+    dcc.Link('Go to CFC Sector', href='/cfc_sectors')
     ]),
     html.Div([
-    dcc.Link('Go CFC Time Series', href='/cfc_time_series')
+    dcc.Link('Go to CFC Time Series', href='/cfc_time_series')
     ]),
     html.Div([
-    dcc.Link('Go NV Time Series', href='/nv_time_series')
+    dcc.Link('Go to NV Time Series', href='/nv_time_series')
+    ]),
+    html.Div([
+    dcc.Link('Go to GCF Time Series', href='/gcf_time_series')
+    ]),
+    html.Div([
+    dcc.Link('Go to GCF Sector', href='/gcf_sectors')
     ]),
     html.Div([
         dcc.Link('Go to Households Private consumption', href='/household')
