@@ -17,12 +17,13 @@ main_sections = [index for index in sections.index if str(sections[index]).isdig
 rows = [data.iloc[idx] for idx in main_sections]
 labels = [row.iloc[1] for row in rows]
 labelIds = main_sections
-print(labels)
+print(labelIds[1])
+
 
 layout = html.Div([
     html.H1('GCF Time Series'),
     dcc.Dropdown(
-        id='my-dropdown',
+        id='gcf-my-dropdown',
         options=[{'label': category, 'value': labelIds[idx]} for (idx, category) in enumerate(labels)],
         value=labelIds[1],
         style={'margin-bottom': '20px'}

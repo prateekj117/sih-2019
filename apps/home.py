@@ -34,7 +34,7 @@ layout = html.Div([
     dcc.Link('Go to GCF Time Series', href='/gcf_time_series')
     ]),
     html.Div([
-    dcc.Link('Go to GCF Sector', href='/gcf_time_series')
+    dcc.Link('Go to GCF Sector', href='/gcf_sectors')
     ])
     
     
