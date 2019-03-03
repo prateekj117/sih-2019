@@ -3,7 +3,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 
-from flask import Flask, request, redirect, url_for, render_template
+from flask import Flask, request, redirect, url_for, render_template, flash
 from werkzeug.utils import secure_filename
 from app import app, server
 from apps import home, crop_wise_output, gva_sectors, agg_national_accounts, gva_time_series, agg_eco_activities, \
@@ -49,16 +49,16 @@ def admin():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(server.config['UPLOAD_FOLDER'], filename))
-            # return redirect(url_for('uploaded_file',
-            #                         filename=filename))
+            flash('File successfully uploaded')
+            return redirect(url_for('admin'))
     return render_template('upload.html')
 
 
 @app.callback(Output('page-content', 'children'),
               [Input('url', 'pathname')])
 def display_page(pathname):
-    if pathname == '/' or pathname == '/home':
-        return home.layout
+    if pathname == '/':
+        return None
     elif pathname == '/agg_national_accounts':
         return agg_national_accounts.layout
     elif pathname == '/gva-sectors':
