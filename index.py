@@ -6,8 +6,10 @@ from dash.dependencies import Input, Output
 from flask import Flask, request, redirect, url_for, render_template, flash
 from werkzeug.utils import secure_filename
 from app import app, server
-from apps import home, crop_wise_output, gva_sectors, agg_national_accounts, gva_time_series, agg_eco_activities, \
-    cfc_sectors, nv_eco, cfc_time_series, nv_time_series, household, gcf_sectors, gcf_time_series
+from apps import (home, crop_wise_output, gva_sectors, agg_national_accounts,
+                  gva_time_series, agg_eco_activities, cfc_sectors, nv_eco,
+                  cfc_time_series, nv_time_series, household, gcf_sectors,
+                  gcf_time_series)
 from apps.admin import requires_auth
 
 UPLOAD_FOLDER = 'data/uploads'
