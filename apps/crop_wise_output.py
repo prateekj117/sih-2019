@@ -35,7 +35,7 @@ def generate_table(dataframe, max_rows=10):
 
 
 layout = html.Div([
-    html.H1('Crop-wise value of output'),
+    html.H2('Crop-wise value of output'),
     dcc.Dropdown(
         id='my-dropdown',
         options=[{'label': category, 'value': labelIds[idx]} for (idx, category) in enumerate(labels)],

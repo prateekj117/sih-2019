@@ -4,6 +4,7 @@ import dash_html_components as html
 import math
 from dash.dependencies import Input, Output, State
 from collections import OrderedDict
+import dash_table
 
 import pandas as pd
 
@@ -29,6 +30,20 @@ print('labels', labels)
 =======
 >>>>>>> 641adfcd6f43f27097121c3c65c0e0d9d24585f4
 
+def generate_table(dataframe, max_rows=10):
+    data = pd.read_excel('data/2018/economic-aggregates/S1.10.xlsx', header = None)
+    df = data[6:]
+    df.columns = df.iloc[0].fillna(value=pd.Series(range(100)))
+    return(dash_table.DataTable(
+    data=df.to_dict('rows'),
+    columns=[{'id': c, 'name': c} for c in df.columns],
+    style_table={
+        'height': '400px',
+        'overflowY': 'scroll',
+        'border': 'thin lightgrey solid'
+    }))
+
+
 def app_layout():
     children = [dcc.Tab(label=year, value=year) for year in year_set]
     categories = labels.copy()
@@ -38,6 +53,7 @@ def app_layout():
     label_ids.insert(0, '0')
 
     return (
+        html.H2('Gross Capital Formation Sectors'),
         html.Div([
             dcc.Dropdown(
                 id='gcf-category',
@@ -51,8 +67,10 @@ def app_layout():
         ),
         html.Div([
             dcc.Tabs(id="gcf-tabs", value=year_set[-1], children=children),
-            html.Div(id='gcf-output-tab')
-        ])
+            html.Div(id='gcf-output-tab'),
+            generate_table(data)
+        ],className="container")
+
     )
 
 
@@ -81,6 +99,7 @@ def filter(year, category, rows, labels, remove=False):
     ]
 
     return html.Div([
+        html.H2('Current Price'),
         dcc.Graph(
             id='gcf-cp-graph',
             figure={
@@ -96,6 +115,7 @@ def filter(year, category, rows, labels, remove=False):
                 }
             }
         ),
+        html.H2('Constant Price'),
         dcc.Graph(
             id='gcf-co-graph',
             figure={

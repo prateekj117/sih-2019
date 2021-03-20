@@ -32,6 +32,7 @@ def app_layout():
     label_ids.insert(0, '0')
 
     return (
+        html.H2('Gross Value Added Sectors'),
         html.Div([
             dcc.Dropdown(
                 id='category',
@@ -90,6 +91,7 @@ def filter(year, category, rows, labels, remove=False):
     ]
 
     return html.Div([
+        html.H2('Current Price'),
         dcc.Graph(
             id='cp-graph',
             figure={
@@ -105,6 +107,7 @@ def filter(year, category, rows, labels, remove=False):
                 }
             }
         ),
+        html.H2('Constant Price'),
         dcc.Graph(
             id='co-graph',
             figure={

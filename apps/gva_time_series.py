@@ -37,7 +37,7 @@ def generate_table(dataframe, max_rows=10):
     ))
 
 layout = html.Div([
-    html.H1('GVA Time Series'),
+    html.H2('Gross Value Added Timeseries'),
     dcc.Dropdown(
         id='my-dropdown',
         options=[{'label': category, 'value': labelIds[idx]} for (idx, category) in enumerate(labels)],
